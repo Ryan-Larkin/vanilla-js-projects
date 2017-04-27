@@ -1,0 +1,57 @@
+/* Box-sizing fix! */
+html {
+  box-sizing: border-box;
+}
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+body {
+    font-family: Helvetica, Arial, sans-serif;
+    background-color:#587381;
+    /*background-image: url('../images/background.jpg');*/
+    /*background-size: cover;*/
+    /*background-repeat:no-repeat;*/
+    /*background-attachment: fixed;*/
+}
+
+.main-header {
+    background:#333;
+    color:white;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding-left:25px;
+    padding-right:25px;
+    /*border-bottom:5px solid #ddd;*/
+}
+
+.image-form {
+    padding-top:25px;
+    padding-bottom:25px;
+    display:flex;
+    justify-content:center;
+}
+
+.search-input {
+    padding:5px;
+    border:0;
+    border-top-left-radius:5px;
+    border-bottom-left-radius:5px;
+}
+
+.search-input:focus {
+    outline:none;
+}
+
+.search-submit {
+    border:0;
+    border-top-right-radius:5px;
+    border-bottom-right-radius:5px;
+}
+
+.gallery > li {
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
