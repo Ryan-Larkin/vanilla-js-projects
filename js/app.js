@@ -32,7 +32,9 @@
     var app = document.querySelector('#app');
     var cityForm = app.querySelector('.city-form');
     var cityInput = cityForm.querySelector('.city-input');
-    var cityWeather = app.querySelector('.city-weather');
+    
+    var currentWeather = app.querySelector('.current-weather');
+    var currentTemperature = app.querySelector('.current-temperature');
     
     cityForm.addEventListener('submit', function() {
         event.preventDefault();
@@ -42,7 +44,47 @@
         getCoordinatesForCity(city) // get the coordinates for the input city
         .then(getCurrentWeather) // get the weather for those coordinates
         .then(function(weather) { // set the current temperature display
-            cityWeather.innerText = 'Current temperature: ' + weather.temperature;
+        console.log(weather);
+            // switch(weather.icon) {
+            //     case 'clear-day':
+            //         document.body.style.backgroundImage = "url('http://www.quotemaster.org/images/b1/b149c31dd5976f75c17a63165fe96af9.jpg')";
+            //         break;
+            //     case 'clear-night':
+            //         document.body.style.backgroundImage = "url('')";
+            //         break;
+            //     case 'rain':
+            //         document.body.style.backgroundImage = "url('')";
+            //         break;
+            //     case 'snow':
+            //         document.body.style.backgroundImage = "url('')";
+            //         break;
+            //     case 'sleet':
+            //         document.body.style.backgroundImage = "url('')";
+            //         break;
+            //     case 'wind':
+            //         document.body.style.backgroundImage = "url('')";
+            //         break;
+            //     case 'fog':
+            //         document.body.style.backgroundImage = "url('')";
+            //         break;
+            //     case 'cloudy':
+            //         document.body.style.backgroundImage = "url('')";
+            //         break;
+            //     case 'partly-cloudy-day':
+            //         document.body.style.backgroundImage = "url('')";
+            //         break;
+            //     case 'partly-cloudy-night':
+            //         document.body.style.backgroundImage = "url('')";
+            //         break;
+            //     default:
+            //         document.body.style.backgroundImage = "url('http://everythingnonfiction.typepad.com/Stormy%20weather.JPG')";
+            // }
+            
+            currentWeather.style.visibility = "visible"
+            currentWeather.innerHTML = 'Current Weather: ' + weather.summary + '&nbsp;';
+            
+            currentTemperature.style.visibility = "visible"
+            currentTemperature.innerHTML = 'Current Temperature: ' + weather.temperature + ' &deg;C ';
         });
     });
 })();
