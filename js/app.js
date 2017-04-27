@@ -1,4 +1,40 @@
 (function() {
+    
+    function preloader() {
+    	if (document.images) {
+    		var img1 = new Image();
+    		var img2 = new Image();
+    		var img3 = new Image();
+    		var img4 = new Image();
+    		var img5 = new Image();
+    		var img6 = new Image();
+    		var img7 = new Image();
+    
+    		img1.src = "images/snow.jpg";
+    		img2.src = "images/clear.jpg";
+    		img3.src = "images/rain.jpg";
+    		img4.src = "images/cloudy.jpg";
+    		img5.src = "images/clear-night.jpg";
+    		img6.src = "images/fog.jpg";
+    		img7.src = "images/sleet.jpg";
+    	}
+    }
+    function addLoadEvent(func) {
+    	var oldonload = window.onload;
+    	if (typeof window.onload != 'function') {
+    		window.onload = func;
+    	} else {
+    		window.onload = function() {
+    			if (oldonload) {
+    				oldonload();
+    			}
+    			func();
+    		}
+    	}
+    }
+    addLoadEvent(preloader);
+    
+    
     var DARKSKY_API_URL = 'https://api.darksky.net/forecast/';
     var DARKSKY_API_KEY = 'e1f4da53d6f0d0889607627a1fe13360';
     var CORS_PROXY = 'https://cors-anywhere.herokuapp.com/';
@@ -43,6 +79,14 @@
     var currentWeather = app.querySelector('.current-weather');
     var currentTemperature = app.querySelector('.current-temperature');
     
+    var tempSpan = document.createElement('span');
+    var tempSymbolSpan = document.createElement('span');
+    
+    var storedTempValue = 0;
+    var symbolStr = '';
+    
+    var isCelsius = true;
+    
     cityForm.addEventListener('submit', function() {
         event.preventDefault();
         
@@ -58,8 +102,26 @@
             currentWeather.innerHTML = 'Current Weather: ' + weather.summary + '&nbsp;';
             
             currentTemperature.style.visibility = "visible";
-            currentTemperature.innerHTML = 'Current Temperature: ' + weather.temperature + ' &deg;C ';
-            console.log(weather.icon);
+            currentTemperature.innerHTML = 'Current Temperature: ';
+            
+            if (isCelsius) {
+                storedTempValue = Math.round(weather.temperature);
+                symbolStr = '°';
+            }
+            else {
+                storedTempValue = Math.round(convertDegrees(weather.temperature, 'f'));
+                symbolStr = '°F';
+            }
+            
+            var tempValue = document.createTextNode(`${storedTempValue}`);
+            var tempSymbolNode = document.createTextNode(`${symbolStr}`);
+            appendSymbol(tempSpan,tempValue);
+            appendSymbol(tempSymbolSpan, tempSymbolNode)
+            
+            currentTemperature.innerHTML = "Current Temperature: ";
+            currentTemperature.appendChild(tempSpan);
+            currentTemperature.appendChild(tempSymbolSpan);
+            
             switch(weather.icon) {
                 case 'clear-day':
                     document.body.style.backgroundImage = "url('images/clear.jpg')";
@@ -94,4 +156,46 @@
     google.maps.event.addDomListener(window, 'load', function () {
         var places = new google.maps.places.Autocomplete(document.querySelector('.city-input'));
     });
+    
+    var radios = document.getElementsByName('degrees');
+    
+    radios.forEach(radio => {
+        radio.onclick = function() {
+            storedTempValue = convertDegrees(storedTempValue, this.value);
+            tempSpan.innerHTML = "";
+            tempSpan.innerHTML = storedTempValue;
+    
+            if(this.value === 'f') {
+                isCelsius = false;
+            } else {
+                isCelsius = true;
+            }
+
+        };
+    });
+    
+    
+    function convertDegrees(temp, type) {
+        console.log('tmep', temp)
+        console.log('type of temp', typeof temp)
+        var convertedTemp = 0;
+        if(type === 'c') {
+            symbolStr = '°';
+            convertedTemp = Math.round(((temp - 32) * 5 / 9));
+        } else {
+            symbolStr = '°F';
+            convertedTemp = Math.round(((temp * 9) / 5 + 32));
+        }
+        
+        var tempSymbolNode = document.createTextNode(`${symbolStr}`)
+        appendSymbol(tempSymbolSpan, tempSymbolNode)
+        
+        return convertedTemp
+    }
+    
+    function appendSymbol(el, node) {
+        el.innerHTML = "";
+        el.appendChild(node)
+    }
+    
 })();

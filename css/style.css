@@ -12,10 +12,12 @@ body {
     background-size: cover;
     background-repeat:no-repeat;
     background-attachment: fixed;
+    background-position:center;
+    margin: 0;
+    padding: 0;
 }
 
 #app {
-    position:fixed;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -27,7 +29,7 @@ body {
 .main-app {
     background-color: rgba(50,50,50, 0.9);
     border-radius:5px;
-    max-width:540px;
+    max-width:340px;
     display:flex;
     justify-content:center;
     align-items:center;
@@ -51,8 +53,13 @@ body {
     font-weight:bold;
 }
 
+.city-weather > p {
+    display:flex;
+    justify-content:flex-start;
+}
+
 .city-input {
-    width:300px;
+    width:150px;
     border-radius:5px;
     border:1px solid #eee;
     padding:5px 10px 5px 10px;
@@ -75,10 +82,20 @@ body {
     background: linear-gradient(#76A6C9, #4E7FA2); /* Standard syntax */
 }
 
-.get-weather-button:focus {
-    outline:none;
-}
-
 .location-address, .current-weather, .current-temperature {
     visibility:hidden;
+}
+
+.temp-type {
+    margin:5px 0 0 0;
+    padding:0;
+    color:#eee;
+    display:flex;
+    justify-content:space-between;
+    
+}
+
+.temp-type > p {
+    padding:0;
+    margin:0;
 }
