@@ -17,7 +17,7 @@
                 pictureUrl  = `https://farm${picture.farm}.staticflickr.com/${picture.server}/${picture.id}_${picture.secret}`;
                 
                 picturesArray.push({
-                    thumb: `${pictureUrl}_t.jpg`,
+                    thumb: `${pictureUrl}_q.jpg`,
                     large: `${pictureUrl}_h.jpg`,
                     title: picture.title
                 });
@@ -82,25 +82,7 @@
                 ticking = false;
             }
             ticking = true;
-        }, 500);
+        }, 750);
             
     });
 })();
-
-var last_known_scroll_position = 0;
-var ticking = false;
-
-function doSomething(scroll_pos) {
-  // do something with the scroll position
-}
-
-window.addEventListener('scroll', function(e) {
-  last_known_scroll_position = window.scrollY;
-  if (!ticking) {
-    window.requestAnimationFrame(function() {
-      doSomething(last_known_scroll_position);
-      ticking = false;
-    });
-  }
-  ticking = true;
-});

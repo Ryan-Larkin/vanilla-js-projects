@@ -55,3 +55,8 @@ body {
     justify-content:center;
     align-items:center;
 }
+
+.gallery > img {
+    height:150px;
+    width:150px;
+}
